@@ -1,125 +1,183 @@
-DPIA outline and priority DPA clause
+Intellectus DPIA outline and proposed processor clause
 
-A. DPIA outline — AI-assisted applicant ranking
+Student: Elza Paegle
+Processing activity: Public-source organisational research and AI-assisted diagnostic preparation
+Status: Draft for controller, DPO, security and legal review before production
 
-Owner: Each employer controller, supported by TalentBridge under Article 28. TalentBridge should maintain a product-level assessment and evidence pack that customers can adapt to their recruitment context.
+Part 1 — DPIA scope and outline
 
-1. Description of the processing
+1. Threshold decision
 
-Map the flow from applicant submission through EU hosting, feature extraction, US API processing, scoring, recruiter display, final decision and deletion.
+The controller must first document whether Article 35 requires a full Data Protection Impact Assessment. Intellectus currently supports a consultant and does not make a legal or similarly significant decision about a person. That lowers the risk. However, a full DPIA is required before production if the actual deployment involves likely high risk, including systematic or large-scale monitoring of public sources, extensive profiling, sensitive data, vulnerable people, person-level recommendations or use of findings in consequential decisions.
 
-Record data categories, sources, data subjects, approximate volume, frequency, locations, access roles, vendors, sub-processors and transfer mechanism.
+Because Intellectus is automated, vendor-dependent and designed for social-impact contexts that may involve vulnerable people, the prudent project approach is to complete the outline below even if counsel ultimately records that a full DPIA is not legally mandatory.
 
-Document the model version, vacancy criteria, scoring logic, output explanation, confidence/limitations, override mechanism and change-management process.
+Owner: the controller using Intellectus.
+Contributors: DPO/privacy lead, Intellectus operator, product owner, consultant representative, security lead, vendor owners and legal counsel.
+Review triggers: new data source; document upload; authentication/persistence; new model or research vendor; broader research window; people-ranking; sensitive-data use; new jurisdiction; serious incident; or material change of purpose.
 
-State explicitly that the baseline prohibits automatic rejection and model training on applicant inputs or outputs.
+2. Processing description and data flow
 
-2. Necessity and proportionality
+Document the final production flow:
 
-Define the legitimate recruitment objective and compare AI ranking with less intrusive alternatives, including structured recruiter review.
+A consultant enters an organisation name, website, country, current challenge, research window and conversation objective.
 
-Confirm the Article 6 basis for each purpose; complete an LIA for ranking if Article 6(1)(f) is proposed.
+An authenticated backend sends a minimised request to the Intellectus/n8n workflow.
 
-Test whether all input fields and derived features are necessary; redact photographs and unrelated special-category data before scoring.
+Research services retrieve public sources. These may contain personal data about people connected to the organisation.
 
-Confirm transparency content, a non-AI review route, rights procedures, retention/deletion and meaningful human oversight.
+The workflow creates sources, evidence, findings, unknowns and contradictions and labels content as observed, inferred, hypothesis or unknown.
 
-Review applicable Member State employment law, collective-agreement or worker-representation requirements under Article 88.
+The consultant reviews the material, chooses validation questions and next steps, controls notes and makes the Draft/Ready decision.
 
-3. Risk identification and treatment
+The browser session ends. The production design deletes or retains n8n execution data, logs, vendor copies and backups according to an approved schedule.
 
-Risk to applicants
+For every stage, record the data fields, people affected, source, purpose, lawful basis, systems, recipients, vendor role, access location, transfer mechanism, retention period, security controls and deletion method. Confirm whether prompts, responses or telemetry are used for provider training or service improvement.
 
-Initial risk
+3. Necessity and proportionality
 
-Required controls
+The assessment should evidence:
 
-Target residual risk
+a specific organisational-consulting purpose for each deployment;
 
-Discriminatory ranking or proxy discrimination
+why person-level data is needed instead of organisation-level or anonymised information;
 
-High
+an approved legitimate-interests assessment where Article 6(1)(f) is used;
 
-Representative validation data; subgroup testing; criterion review; adverse-impact thresholds; suspend/retrain process
+a documented Article 14 transparency approach for indirect collection;
 
-Medium
+exclusion or escalation of Article 9 and Article 10 data;
 
-Incorrect CV extraction or score
+source and date restrictions, data minimisation and identity-matching checks;
 
-High
+human review before any finding enters a client-usable brief;
 
-Source-data display; applicant correction route; validation samples; confidence/exception handling
+accuracy, correction, objection, erasure and restriction workflows;
 
-Low–medium
+retention and deletion rules for browser, n8n, APIs, logs and backups; and
 
-Rubber-stamped automated decisions
+compliance with confidentiality, intellectual-property, defamation, sector and national laws in addition to GDPR.
 
-High
+4. Risks and controls
 
-No auto-rejection; trained reviewer; authority/time to override; reason logging; rubber-stamp monitoring
+Risk to people
 
-Medium
+Example harm
 
-Use or inference of Article 9 data
+Required control
 
-High
+Closure evidence
 
-Pre-scoring redaction; feature blocklist; separate accommodation workflow; access segregation
+Incorrect identity matching
 
-Low–medium
+Information about a namesake is attached to an employee or founder.
 
-Opaque outcome and weak contestability
+Require source-linked identity checks; suppress ambiguous matches; allow correction and rerun.
 
-High
+Test results and correction records.
 
-Plain-language notice; main-factor explanation; human review and appeal channel; service deadlines
+Unsupported inference
 
-Medium
+A hypothesis is presented to a client as fact and harms a person's reputation.
 
-Secondary use for model training
+Keep epistemic labels visible; require evidence IDs and consultant review; block unsupported content from the Ready brief.
 
-High
+Schema tests and reviewed output samples.
 
-Technical opt-out; no-training clause; zero/short API retention; audit evidence
+Sensitive or criminal-offence data
 
-Low
+Public research reveals health, politics, ethnicity, union activity or allegations.
 
-Unlawful US transfer or onward transfer
+Exclude by default; detect and quarantine where feasible; require DPO/legal approval and a valid Article 9/10 basis for exceptions.
 
-High
+Filtering tests and escalation log.
 
-Verify DPF scope or use SCC Module 3 plus TIA; encryption; sub-processor controls; reassessment
+Invisible public-data collection
 
-Medium
+A person does not know that their public information appears in a diagnostic.
 
-Excessive retention or copies in logs/backups
+Adopt an Article 14 delivery/exception policy; publish required information; document safeguards and objections.
 
-Medium–high
+Notice, assessment and delivery records.
 
-Automated deletion; log minimisation; vendor deletion confirmation; backup expiry testing
+Disproportionate monitoring
 
-Low–medium
+Broad research builds a detailed profile unrelated to the client objective.
 
-Unauthorised access or breach
+Use approved sources, a bounded research window and organisation-level evidence; prohibit general people profiling.
 
-High
+Search configuration and sampling report.
 
-Least privilege; MFA; encryption; monitoring; incident playbook; breach-notification assistance
+Unauthorised secondary use
 
-Medium
+A vendor trains a model or combines data across customers.
 
-4. Approval, consultation and review
+Article 28 terms, no-training clause, vendor settings, subprocessor controls and verified deletion.
 
-Record control owners, deadlines, test evidence, remaining risks and formal controller sign-off.
+Contract, settings and attestations.
 
-Consult the DPO and, where applicable, worker representatives and affected-user representatives.
+Excessive execution retention
 
-If high residual risk cannot be reduced, consult the competent supervisory authority before processing under Article 36.
+Requests, public-source extracts and outputs remain in n8n or model logs indefinitely.
 
-Reopen the DPIA after material model, purpose, feature, vendor, country, scale or decision-workflow changes and at least annually.
+Purpose-based periods; metadata-only/redacted logs; automatic deletion; backup expiry; run deletion/cancellation.
 
-B. Priority Article 28 clause — no training or secondary use
+Retention configuration and deletion test.
 
-Purpose limitation and model training. The Processor and each Sub-processor shall process Applicant Data, including prompts, files, extracted features, outputs, scores and associated metadata, solely to provide the Services on the Controller's documented instructions. They shall not use, retain, disclose, combine or otherwise process Applicant Data to train, fine-tune, evaluate or improve any model, algorithm, dataset, product or service; create profiles for their own purposes; or derive information unrelated to the instructed screening service. The Processor shall configure all relevant services to disable such use, flow this restriction down to every Sub-processor, delete service copies at the end of the agreed retention period, and provide reasonable documentary evidence of compliance on request.
+Security failure
 
-Why this clause matters: CVs contain dense personal information and can reveal sensitive attributes. An explicit restriction prevents purpose creep, reduces the risk that a processor becomes an independent controller for product improvement, and makes the promised no-training baseline enforceable throughout the vendor chain. The clause should sit alongside security, confidentiality, deletion/return, audit, breach-support, rights-assistance and sub-processor-change provisions.
+An unprotected webhook exposes diagnostics or can be abused.
+
+Authenticated backend/gateway, strict CORS, rate/body limits, least privilege, encryption and restricted execution access.
+
+Architecture review and penetration/security tests.
+
+International transfer
+
+Vendors or support staff access personal data outside the EEA without safeguards.
+
+Vendor/location map, adequacy decision or SCCs, transfer assessment and supplementary measures.
+
+Transfer register and signed terms.
+
+Rights cannot be fulfilled
+
+The controller cannot find which run or source contains a person's data.
+
+Link source, evidence, finding, run and recipient; establish request intake, verification, search, action and response procedures.
+
+Rights exercise and response records.
+
+Function creep
+
+A client later uses Intellectus to rank employees, beneficiaries or applicants.
+
+Contractual purpose limits; use-case approval; technical restrictions; renewed GDPR and AI Act assessment.
+
+Change-control and use-case register.
+
+5. Consultation, residual risk and approval
+
+Consider input from consultants, client representatives, information-security specialists and, where appropriate, people or organisations representing affected communities. The DPO should state whether each risk is avoided, reduced, transferred or accepted. Owners and deadlines must be assigned to every open control.
+
+If the completed assessment shows high residual risk that cannot be reduced, the controller must not start the processing before consulting the competent supervisory authority under Article 36. The decision page should record approved, approved with conditions, or not approved, plus the date, scope, approvers and next review trigger.
+
+Part 2 — Proposed no-training and secondary-use processor clause
+
+Intellectus Data: instructions, purpose limitation and no training. The Processor shall process Intellectus Data only on the Controller's documented instructions and solely to provide the contracted public-source research, diagnostic preparation, technical support and security functions. “Intellectus Data” includes intake fields, prompts, retrieved personal data, sources, evidence, findings, unknowns, contradictions, consultant notes where transmitted, outputs, run identifiers, execution data and logs containing personal data.
+
+The Processor shall not use Intellectus Data to train, fine-tune, evaluate, benchmark or improve any general or customer-shared model or service; create a profile for another customer; advertise; sell or license data; conduct unrelated research; or determine any independent purpose. It shall not combine Intellectus Data with information from another customer or source except as expressly instructed in writing. The Processor shall configure all available provider controls to disable model training and unauthorised human review.
+
+The Processor shall retain Intellectus Data only for the documented service period and shall apply the Controller's run, log and backup retention schedule. On instruction or termination, it shall securely delete or return the data and certify completion, including deletion from active systems and expiry from backups under a disclosed schedule. It shall not retain prompts, responses, source extracts or telemetry containing personal data beyond the approved period.
+
+Access shall be limited to authorised personnel bound by confidentiality and protected by appropriate Article 32 security. The Processor shall not appoint or change a subprocessor without the Controller's agreed authorisation process and shall bind each subprocessor to equivalent obligations. It shall disclose all processing and support locations and shall not make a restricted international transfer without an approved Chapter V mechanism.
+
+The Processor shall promptly assist with Article 13/14 transparency, data-subject requests, DPIA work, prior consultation, security reviews, audits, deletion verification and breach response. It shall provide the information necessary to demonstrate Article 28 compliance, notify the Controller of a personal-data breach without undue delay, preserve relevant evidence and immediately inform the Controller if an instruction appears unlawful. The Processor shall not present an inference as verified fact or overwrite consultant-controlled notes or review status.
+
+This draft supplements, and does not replace, the remaining mandatory Article 28 terms, security schedule, subprocessor list, transfer terms, service specification, retention schedule and legal review.
+
+Official references
+
+GDPR Articles 25, 28, 32, 35 and 36
+
+EDPB guidance on lawful processing
