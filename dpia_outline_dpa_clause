@@ -1,0 +1,125 @@
+DPIA outline and priority DPA clause
+
+A. DPIA outline — AI-assisted applicant ranking
+
+Owner: Each employer controller, supported by TalentBridge under Article 28. TalentBridge should maintain a product-level assessment and evidence pack that customers can adapt to their recruitment context.
+
+1. Description of the processing
+
+Map the flow from applicant submission through EU hosting, feature extraction, US API processing, scoring, recruiter display, final decision and deletion.
+
+Record data categories, sources, data subjects, approximate volume, frequency, locations, access roles, vendors, sub-processors and transfer mechanism.
+
+Document the model version, vacancy criteria, scoring logic, output explanation, confidence/limitations, override mechanism and change-management process.
+
+State explicitly that the baseline prohibits automatic rejection and model training on applicant inputs or outputs.
+
+2. Necessity and proportionality
+
+Define the legitimate recruitment objective and compare AI ranking with less intrusive alternatives, including structured recruiter review.
+
+Confirm the Article 6 basis for each purpose; complete an LIA for ranking if Article 6(1)(f) is proposed.
+
+Test whether all input fields and derived features are necessary; redact photographs and unrelated special-category data before scoring.
+
+Confirm transparency content, a non-AI review route, rights procedures, retention/deletion and meaningful human oversight.
+
+Review applicable Member State employment law, collective-agreement or worker-representation requirements under Article 88.
+
+3. Risk identification and treatment
+
+Risk to applicants
+
+Initial risk
+
+Required controls
+
+Target residual risk
+
+Discriminatory ranking or proxy discrimination
+
+High
+
+Representative validation data; subgroup testing; criterion review; adverse-impact thresholds; suspend/retrain process
+
+Medium
+
+Incorrect CV extraction or score
+
+High
+
+Source-data display; applicant correction route; validation samples; confidence/exception handling
+
+Low–medium
+
+Rubber-stamped automated decisions
+
+High
+
+No auto-rejection; trained reviewer; authority/time to override; reason logging; rubber-stamp monitoring
+
+Medium
+
+Use or inference of Article 9 data
+
+High
+
+Pre-scoring redaction; feature blocklist; separate accommodation workflow; access segregation
+
+Low–medium
+
+Opaque outcome and weak contestability
+
+High
+
+Plain-language notice; main-factor explanation; human review and appeal channel; service deadlines
+
+Medium
+
+Secondary use for model training
+
+High
+
+Technical opt-out; no-training clause; zero/short API retention; audit evidence
+
+Low
+
+Unlawful US transfer or onward transfer
+
+High
+
+Verify DPF scope or use SCC Module 3 plus TIA; encryption; sub-processor controls; reassessment
+
+Medium
+
+Excessive retention or copies in logs/backups
+
+Medium–high
+
+Automated deletion; log minimisation; vendor deletion confirmation; backup expiry testing
+
+Low–medium
+
+Unauthorised access or breach
+
+High
+
+Least privilege; MFA; encryption; monitoring; incident playbook; breach-notification assistance
+
+Medium
+
+4. Approval, consultation and review
+
+Record control owners, deadlines, test evidence, remaining risks and formal controller sign-off.
+
+Consult the DPO and, where applicable, worker representatives and affected-user representatives.
+
+If high residual risk cannot be reduced, consult the competent supervisory authority before processing under Article 36.
+
+Reopen the DPIA after material model, purpose, feature, vendor, country, scale or decision-workflow changes and at least annually.
+
+B. Priority Article 28 clause — no training or secondary use
+
+Purpose limitation and model training. The Processor and each Sub-processor shall process Applicant Data, including prompts, files, extracted features, outputs, scores and associated metadata, solely to provide the Services on the Controller's documented instructions. They shall not use, retain, disclose, combine or otherwise process Applicant Data to train, fine-tune, evaluate or improve any model, algorithm, dataset, product or service; create profiles for their own purposes; or derive information unrelated to the instructed screening service. The Processor shall configure all relevant services to disable such use, flow this restriction down to every Sub-processor, delete service copies at the end of the agreed retention period, and provide reasonable documentary evidence of compliance on request.
+
+Why this clause matters: CVs contain dense personal information and can reveal sensitive attributes. An explicit restriction prevents purpose creep, reduces the risk that a processor becomes an independent controller for product improvement, and makes the promised no-training baseline enforceable throughout the vendor chain. The clause should sit alongside security, confidentiality, deletion/return, audit, breach-support, rights-assistance and sub-processor-change provisions.
