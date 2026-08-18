@@ -1,0 +1,62 @@
+Mini data protection by design checklist
+
+Scope: Highest-risk activity — extracting, scoring and ranking EU/EEA job applicants.
+
+Control
+
+Status
+
+Current finding
+
+Required next step
+
+Data minimisation
+
+Fail
+
+The proposed flow can send the full CV and free text, although photographs, addresses, affiliations and other fields may be irrelevant to suitability.
+
+Define a job-relevance schema, redact excluded fields before the API call, and prohibit sensitive/proxy features.
+
+Purpose binding
+
+Unknown
+
+The intended baseline forbids training, but vendor retention settings and downstream contractual restrictions are not yet evidenced.
+
+Apply the no-training clause, disable retention/training technically, verify sub-processors and retain configuration evidence.
+
+Access controls
+
+Unknown
+
+Authorised recruiter and support roles are described, but least-privilege roles, MFA, access reviews and audit-log testing are not evidenced.
+
+Implement role-based access, MFA, quarterly access review and alerting for bulk or unusual access.
+
+Retention enforcement
+
+Fail
+
+A schedule exists, but automated deletion across production, API records, logs and backups has not been demonstrated.
+
+Implement deletion jobs, vendor deletion instructions, backup expiry and quarterly deletion testing.
+
+Subject-rights workflow
+
+Unknown
+
+Applicants need access, correction, objection, erasure/restriction and human-review routes, but no tested 30-day case workflow exists.
+
+Create one intake channel, ownership matrix, identity verification, processor search/export support and deadline alerts; run a tabletop test.
+
+Incident response
+
+Unknown
+
+Article 28 breach support is required, but detection, escalation and evidence needed for the controller's 72-hour assessment are not documented.
+
+Adopt an incident playbook, agree rapid processor-to-controller notice, maintain contact details and test a CV-data breach scenario.
+
+Overall result: Do not launch yet. The design can move to controlled pilot only after both failures are remediated, unknowns are evidenced, the DPIA is approved and a no-auto-rejection workflow is tested.
+
