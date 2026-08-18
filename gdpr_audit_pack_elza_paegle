@@ -1,187 +1,98 @@
-GDPR Audit Pack — Elza Paegle
+# GDPR audit pack: Intellectus
 
-Audit worksheet
+**Student:** Elza Paegle  
+**Track:** Module 7 — GDPR  
+**System audited:** Intellectus — Social Impact Intelligence  
+**Assessment:** First-pass educational review based on the documented prototype and live webhook architecture
 
-Transition note from the EU AI Act lab
+## 1. Transition note
 
-This audit carries forward Case B: AI-assisted CV screening with human review. In the earlier AI Act exercise, the system was classified as high-risk because it ranks applicants and materially influences who progresses to interview, even though a recruiter can confirm or override the shortlist. It is the strongest case for a GDPR audit because it combines profiling, potentially significant employment effects, possible special-category data in free-text CVs, a power imbalance, and a non-EU processor chain. The AI Act and GDPR analyses therefore run in parallel: high-risk product controls do not replace the need for a lawful basis, data minimisation, applicant rights, and valid transfer safeguards.
+The EU AI Act review asks what kind of AI system Intellectus is and which system-level controls apply. This GDPR review asks a different question: whenever Intellectus handles information about an identifiable person, who decides why that information is used, what lawful basis applies, how the person is informed, how long the information is kept, and how their rights can be exercised. Publicly available information can still be personal data. An AI Act classification therefore does not answer the GDPR questions.
 
-Fixed fact pattern
+## 2. Fixed fact pattern
 
-TalentBridge GmbH is a fictional Berlin HR-technology company with about 80 employees that provides CV-screening software to medium-sized EU employers. Its employer customers upload approximately 100,000 EU/EEA applications per year, including names, contact details, CVs, education, employment history, skills, languages, cover letters, recruiter notes, and vacancy data. The system extracts job-related information, compares it with pre-set vacancy criteria, assigns a score, and ranks applicants for recruiter review. A recruiter is meant to review the CV, score, and explanation before inviting or rejecting anyone and can override the ranking; the system must not auto-reject. TalentBridge uses an EU cloud host and a US-based model API sub-processor whose EU–US Data Privacy Framework certification has not yet been verified. The intended baseline does not permit applicant data to be used for vendor or product model training, but this must still be confirmed contractually and technically. TalentBridge acts mainly as processor for each employer controller; any independent use for security logs or product improvement requires a separate role and purpose analysis.
+This audit is based on the repository documentation supplied for Intellectus:
 
-CFU checkpoint 1 — Recognize
+- Intellectus helps a consultant prepare for a client conversation. It turns public information into a diagnostic containing sources, evidence, findings, unknowns, contradictions, questions, possible next steps, measures and a conversation brief.
+- The consultant enters an organisation name, website, country, current challenge, research dates and a conversation objective. The live request sends those fields to an n8n webhook. Browser file uploads are not transmitted in the current implementation; `uploaded_document_refs` must remain empty.
+- The live workflow performs public research, assembles evidence and transforms it into structured output. Findings are labelled as observed, inferred, hypothesis or unknown and include confidence and validation fields.
+- Intellectus does not score people, determine eligibility, allocate services or make employment decisions. Its output is a starting point for professional discussion, not an automatic decision about an individual.
+- A consultant reviews the result, chooses questions and next steps, controls their notes, and makes the final Draft/Ready decision. Workflow output must not overwrite consultant notes or the human review status.
+- In the browser, intake, selections, notes and review status remain in React memory and reset on reload. The live n8n workflow may nevertheless retain request, execution and response data; the retention period and deletion process are not documented.
+- The current prototype has no authentication, saved diagnostics, document storage or history. Repository documentation states that production needs an authenticated backend or gateway because a direct browser-to-webhook design cannot protect a secret.
+- Personal data may appear in public sources and generated findings, including names, job titles, quotations, public contact details, professional histories or information about founders, staff, partners, beneficiaries and other people connected to the organisation. Consultant notes may also contain personal data.
+- The identities, hosting locations, model-training practices and transfer arrangements of n8n, research providers, model/API providers and other subprocessors are not fully evidenced in the supplied material.
 
-Personal data present: identity and contact details; education and employment history; skills, languages, location, work eligibility, cover-letter content, recruiter notes; application metadata; AI-generated scores, rankings, explanations, and inferred suitability.
+Unknown facts are recorded as gaps. They are not treated as proof that a control exists or that a violation has occurred.
 
-Special-category risk: CVs or attachments may reveal health/disability, trade-union membership, political or religious affiliation, racial or ethnic origin, or other Article 9 information. These data are not necessary for general ranking and must be excluded or segregated.
+## 3. Mini GDPR audit worksheet
 
-EU-border crossing: yes. Applicant data may be sent from the EU/EEA processor to a US model API sub-processor.
+### Section A — Scope, personal data, roles and lawful basis
 
-Section A — Data map
+| Question | First-pass answer | Status / required action |
+| --- | --- | --- |
+| Does GDPR apply? | Organisation names and public reports may be non-personal, but data about identifiable employees, founders, partners, consultants or beneficiaries is personal data under Article 4(1). Public availability does not remove it from GDPR. | **Applies whenever personal data is processed.** Create a field- and source-level inventory. |
+| Who is the controller? | The consultancy or client that decides the research objective, target organisation, criteria and use of the diagnostic is likely the controller. If Intellectus's operator independently determines purposes such as model training or product analytics, it may be a controller for those separate purposes. | **Partial:** document a purpose-by-purpose role map; obtain legal review for any joint-control question. |
+| Who are processors? | An Intellectus operator acting only on client instructions may be a processor. n8n hosting, model/API providers, research services and infrastructure vendors may be processors or subprocessors depending on their actual terms and use. | **Gap:** identify every vendor, role, location and instruction chain before production. |
+| What personal data may be processed? | Consultant identification and notes; names, roles, public statements, professional histories, contact details, source URLs and inferences about people linked to the target organisation; run and correlation metadata. | **Partial:** map inputs, derived data, logs, recipients, storage and deletion. |
+| What is the purpose? | To prepare a bounded, source-linked organisational diagnostic and consultant-reviewed client conversation. | **Pass with conditions:** prohibit unrelated profiling, advertising, model training, people-ranking and reuse across clients. |
+| What lawful basis applies? | Contractual necessity under Article 6(1)(b) may apply to account or service data where the individual is party to the contract. For public-source research about third parties, Article 6(1)(f) legitimate interests is the more plausible first-pass basis, but only after identifying a real interest, proving necessity and completing a balancing test. | **Gap:** complete and approve a legitimate-interests assessment (LIA); do not assume that “public” means freely reusable. |
+| Are sensitive data involved? | Research may incidentally reveal political opinions, health, ethnicity, religion, union membership or other Article 9 data, and possibly Article 10 criminal-offence data. | **Gap:** exclude these categories by default, block their use in recommendations and define an escalation path. “Manifestly made public” under Article 9(2)(e) is narrow and requires legal review. |
+| Is the processing necessary and proportionate? | Organisation-level research may be useful, but the prototype does not show that every person-level fact, inference or source is necessary. | **Gap:** prefer organisation-level evidence, minimise names and quotations, limit the research window, and avoid searching individuals unless essential and approved. |
 
-Purpose
+### Section B — Transparency, individual rights and human review
 
-Data and source
+**Transparency.** Article 13 applies to data collected directly from consultant users. Article 14 is relevant when Intellectus obtains personal data about other people from public sources. The controller must determine how those people will be informed, including the source and categories of data. Any reliance on the Article 14(5)(b) disproportionate-effort exception must be assessed and documented case by case; it is not automatic for public web research. Where the exception genuinely applies, the controller must still take appropriate protective measures, including making the required information publicly available.
 
-Lawful basis and one-line justification
+**Automated decision-making.** On the documented facts, Intellectus does not make a solely automated decision that has legal or similarly significant effects on a person. Article 22 is therefore not the central issue. This conclusion would change if a future client used findings to rank individuals, allocate opportunities, determine employment, deny services or make another consequential decision.
 
-Retention
+| Requirement | Current state | Required action |
+| --- | --- | --- |
+| Privacy information (Articles 13–14) | No complete user notice or indirect-collection transparency plan is evidenced. | Publish a layered notice identifying controller/DPO, purposes, bases, data/source categories, recipients, vendors, transfers, retention, rights and complaint route. Document the Article 14 delivery or exception strategy. |
+| Access and source traceability | The schema links sources, evidence and findings, but no data-subject request workflow is shown. | Make records searchable by person/source/run; provide the person's data, sources, inferences and recipients while protecting others' rights. |
+| Rectification and objection | Findings can be marked uncertain, but correction and Article 21 objection processes are absent. | Allow correction, suppression and rerun; route objections to a human; stop processing while a valid request is assessed where required. |
+| Erasure and restriction | Browser session data resets, but n8n and vendor retention is unknown. | Define deletion across execution data, logs, caches, vendors and backups; support restriction and legal holds. |
+| Accuracy and fairness | Fact/inference/hypothesis/unknown labels and source links are strong design safeguards. Human review is required. | Keep those labels visible; prevent unsupported findings from becoming client claims; record corrections, overrides and quality failures. |
+| Human review | A consultant selects questions/next steps and marks the brief Ready. | Define what must be checked: source relevance, identity matching, accuracy, sensitive data, unsupported inference, necessity and client usability. Record reviewer and outcome. |
 
-Recipients / processors
+### Section C — DPIA, contracts, security, retention and accountability
 
-International transfer
+| Requirement | Finding | Remediation |
+| --- | --- | --- |
+| DPIA screening (Article 35) | The bounded prototype does not clearly make significant decisions about people, but automated public-source research, possible profiling, sensitive data and people in vulnerable contexts can create high risk. | Complete a documented DPIA threshold assessment. Complete the full DPIA before production if processing becomes systematic, large-scale, sensitive, person-focused or consequential; this submission includes a precautionary DPIA outline. |
+| Data protection by design/default (Article 25) | Session-only state, schema validation, source linkage and epistemic labels are positive. Vendor retention, sensitive-data filtering and rights workflows are missing. | Convert privacy controls into tested technical defaults and production launch gates. |
+| Processor terms (Article 28) | No executed DPA or subprocessor schedule is supplied. | Sign Article 28 terms covering instructions, confidentiality, security, subprocessors, rights support, incidents, deletion/return, audits and no training or secondary use. |
+| International transfers (Chapter V) | Vendor and execution locations are unknown. | Map all access and storage locations. Use an adequacy decision or appropriate safeguards such as SCCs where required, with a transfer assessment and supplementary measures. |
+| Security (Article 32) | The documented direct browser webhook is not production-ready; authentication, rate limits, CORS restrictions and retention controls remain future work. | Put the webhook behind an authenticated backend/gateway; restrict CORS; enforce request limits and rate limits; use least privilege, encryption, redacted logs and restricted n8n execution access. |
+| Retention (Article 5(1)(e)) | Browser data is session-only, but execution data, logs, model-provider retention and backups are not defined. | Set purpose-based periods for failed and completed runs, notes, logs and backups; implement run deletion/cancellation and obtain vendor deletion evidence. |
+| Records and incidents (Articles 30, 33–34) | No complete ROPA or incident chain is evidenced. | Record the activity and vendor chain; define processor-to-controller notification, breach assessment and notification responsibilities. |
+| Accountability (Articles 5(2) and 24) | Architecture and validation documents provide useful evidence but do not form a complete GDPR record. | Retain the role map, LIA, DPIA screening, notices, ROPA, DPAs, transfer review, security tests, review logs, rights requests and corrective actions. |
 
-Receive and manage an application
+## 4. Overall conclusion
 
-Applicant-provided identity, contact details, CV, cover letter, education, work history, skills and vacancy selected
+**Proceed with conditions.** Intellectus is not prohibited by GDPR and, on its current design, does not make significant automated decisions about people. The main compliance risk is that public organisational research can silently become personal-data collection and inference. Production should wait until the controller and vendor roles are confirmed, the LIA and Article 14 approach are documented, sensitive data is excluded or escalated, vendor and transfer terms are complete, n8n retention is controlled, the webhook is secured, and rights and human-review procedures are operational.
 
-Article 6(1)(b), pre-contract steps, for the employer controller: processing the application is necessary to consider the applicant's request to enter an employment contract. Confirm any Member State employment-law rules under Article 88.
+## 5. Client recommendation memo (300–400 words)
 
-Active recruitment period plus six months after the final decision, subject to documented local limitation periods; backups deleted within 30 further days
+**To:** Head of Product, Intellectus client  
+**From:** Elza Paegle  
+**Subject:** GDPR conditions for production use of Intellectus
 
-Employer HR/recruiters; TalentBridge as processor; EU cloud host as sub-processor
+**Recommendation: proceed with conditions.** Intellectus converts public information into a source-linked organisational diagnostic for consultant review. Although much of the material concerns organisations, the workflow may also collect names, roles, quotations, contact details, professional histories and inferences about identifiable employees, founders, partners or beneficiaries. Public availability does not take that information outside the GDPR.
 
-None if storage/support remains in the EEA
+The organisation that chooses the research target, objective and use of the report is likely the controller. An Intellectus operator, n8n environment, model/API provider, research provider and hosting service may act as processors or subprocessors if they use data only on documented instructions. Confirm each role and prohibit providers from training models, improving unrelated services or combining client data for their own purposes.
 
-Extract, score and rank applicants against documented vacancy criteria
+For public-source personal data, legitimate interests is the most plausible first-pass lawful basis. Before relying on it, the controller must document the specific interest, show that person-level processing is necessary, consider less intrusive alternatives and balance the impact against individuals' reasonable expectations. Exclude special-category and criminal-offence data by default and escalate any exceptional need to the DPO and counsel.
 
-Application data plus vacancy criteria; generated features, score, ranking and explanation
+The controller must also resolve Article 14 transparency for people whose data comes from public sources. Any disproportionate-effort exception requires a documented case-specific assessment and safeguards; it is not automatic. Publish a clear notice and provide routes for access, correction, objection, restriction and erasure. Keep source, evidence, finding and run links so requests can be answered.
 
-Proposed Article 6(1)(f), conditioned on an LIA and legal review. The employer may have a legitimate interest in consistent, efficient screening, but must prove purpose, necessity and a fair balance. AI ranking is not automatically “necessary” under Article 6(1)(b). TBD — national employment-law review.
+Several design choices already reduce risk: session-only browser state, source-linked evidence, explicit distinctions between facts and hypotheses, and a consultant-controlled Draft/Ready decision. Preserve them. Before production, add a formal human-review checklist, sensitive-data filtering, retention and deletion rules for n8n execution data and vendors, and an approved DPIA threshold assessment.
 
-Same as the application record; ranking artefacts deleted when the application file is deleted
+Finally, replace the direct browser-to-webhook deployment with an authenticated backend or gateway. Restrict CORS, rate-limit requests, minimise and redact logs, restrict execution access, map international transfers, sign Article 28 terms and test incident response. This is a first-pass compliance recommendation, not legal advice, a DPIA approval or certification.
 
-Authorised employer recruiters; TalentBridge; EU cloud host; US model API sub-processor
+## Official references
 
-Article 45 adequacy only if the exact US recipient is DPF-certified for the relevant data. Otherwise Article 46 SCCs, Module 3, plus a transfer impact assessment and supplementary measures
-
-Provide a voluntary future-opportunity talent pool
-
-Contact details, CV, job preferences
-
-Article 6(1)(a), consent: separate, optional, specific consent with no disadvantage for refusal and easy withdrawal
-
-12 months, then delete or request fresh opt-in
-
-Employer talent team; TalentBridge; approved sub-processors
-
-Same transfer rule as above if US processing occurs; preferably keep this data in the EEA
-
-Maintain service security and audit logs
-
-User/account identifiers, timestamps, access records, system events; avoid CV text in logs
-
-Article 6(1)(f), legitimate interests: limited security logging is necessary to protect the service and applicant data, subject to minimisation and access controls
-
-90 days, unless a documented security investigation requires a limited extension
-
-TalentBridge security staff; EU logging/hosting provider
-
-EEA only in the proposed design
-
-Train or improve models using applicant data
-
-CVs, outcomes, scores, recruiter decisions
-
-Not authorised in the baseline. Any future reuse requires a separate compatibility, role, lawful-basis, Article 9, transparency and DPIA assessment before processing
-
-None; provider inputs/outputs must not be retained for training
-
-No recipient authorised
-
-No transfer authorised for this purpose
-
-Data-flow summary
-
-The applicant submits materials to the employer's recruitment portal.
-
-The employer controller sends the application to TalentBridge under documented instructions.
-
-TalentBridge stores the record with an EU host and sends only minimised text needed for scoring to the approved model sub-processor.
-
-TalentBridge returns a score, ranked shortlist and explanation to an authorised recruiter.
-
-The recruiter examines the underlying application and documents an independent decision before any rejection or interview decision.
-
-The application, ranking artefacts, API records and backups are deleted according to the retention schedule.
-
-Section B — Risk and rights
-
-1. Are Article 9 special-category data present or inferable?
-
-They may be included incidentally or inferred from names, photographs, affiliations, career gaps, accommodation requests or free text. General suitability ranking must not use or infer these attributes. Unnecessary fields should be redacted before scoring; accommodation or legally required employment data should be handled in a separate restricted workflow with a valid Article 9(2) condition and Member State safeguards.
-
-2. Is Article 22 automated decision-making present?
-
-The design is intended not to be solely automated because a recruiter reviews the underlying CV, the score and the explanation before acting. Article 22 risk remains high: if recruiters routinely rubber-stamp the ranking or never have authority, time or information to change it, the decision may be treated as effectively automated and similarly significant. The system therefore needs a no-auto-rejection rule, trained reviewers, real override authority, review logs, clear reasons, and an applicant route to obtain human intervention and contest an outcome.
-
-3. Is a DPIA required?
-
-Yes, before launch. The processing meets multiple EDPB criteria: evaluation/scoring; automated decision-making with potentially significant effects; large-scale processing; use of innovative technology; data concerning applicants in a power-imbalanced or vulnerable position; possible sensitive data; and potential exclusion from an employment opportunity. Meeting several criteria, together with GDPR Article 35's high-risk threshold, makes a DPIA necessary. The employer controller owns the DPIA, with TalentBridge's Article 28 assistance; TalentBridge should also maintain a reusable product-level assessment.
-
-4. Likely data-subject friction points
-
-Access: applicants will request their stored data, score, ranking, relevant logic/factors, recipients and retention information.
-
-Rectification: an inaccurate extracted skill or employment date may directly depress a score and must be correctable before the decision.
-
-Objection: where ranking relies on Article 6(1)(f), applicants can object to profiling; the employer must assess the objection and offer a practical non-AI review path where appropriate.
-
-Erasure/restriction: deletion requests may conflict with a short, documented need to retain evidence for legal claims; the response must distinguish active-use data from restricted legal-hold data.
-
-Human review/contest: applicants need a simple way to challenge a result and receive review by a person able to change it.
-
-5. Controller / processor split
-
-Employer customer — controller: decides to recruit, defines vacancy criteria, chooses the tool, determines the outcome, sets the lawful basis, provides notices, handles rights and owns the case-specific DPIA.
-
-TalentBridge — processor for screening: processes applicant data only on documented employer instructions and assists with security, rights, deletion, DPIA evidence and breach response.
-
-TalentBridge — possible independent controller: only for narrowly defined account/security data or any self-determined product-improvement purpose. Product improvement using applicant content is outside the baseline and would require a fresh assessment.
-
-EU cloud host and US model API — sub-processors: may act only under Article 28-compliant terms, approved instructions and an up-to-date sub-processor list.
-
-6. Are DPAs required?
-
-Yes. Each employer needs an Article 28 DPA with TalentBridge. TalentBridge needs sub-processing terms with the EU host and US model vendor, including confidentiality, security, deletion/return, audit evidence, incident support, rights/DPIA assistance, prior notice of sub-processor changes, and a ban on model training or secondary use. The US transfer also needs verified DPF coverage or the correct SCC module and transfer assessment.
-
-Section C — Law stacking
-
-AI Act: the CV-ranking system is high-risk under Annex III, point 4(a), because it is used to analyse/filter applications and evaluate candidates. The AI Act adds provider/deployer duties such as risk management, data governance, documentation and logs, deployer information, human oversight, accuracy, robustness, cybersecurity and monitoring; these do not replace GDPR lawful-basis and rights duties.
-
-ePrivacy: no cookies, tracking pixels or device-level tracking are required for the fixed scenario, so ePrivacy is N/A to the ranking flow. Any optional non-essential recruitment-site analytics would require a separate cookie/consent assessment and must not feed the ranking model.
-
-Data Act: N/A to the core audit because no connected-product or IoT data is processed. Any general contractual cloud-switching issue should be assessed separately and does not provide a lawful basis for applicant profiling.
-
-Client recommendation memo
-
-To: Executive, Legal and Product Teams, TalentBridge GmbH
-From: Elza Paegle, AI Governance Consultant
-Subject: Conditions for launching the EU applicant-ranking service
-
-Bottom line — go with conditions. TalentBridge may proceed only after the controller/processor model, lawful basis, human-review workflow and EU–US transfer safeguards are implemented and evidenced. The tool affects access to employment, profiles applicants at scale and may receive sensitive information; a recruiter override in the interface is not enough unless review is meaningful in practice.
-
-First, complete a DPIA and lawful-basis decision before live processing. Each employer must document why AI ranking is necessary and proportionate, complete the purpose–necessity–balancing test if relying on legitimate interests, and check national employment rules. The DPIA should test discrimination, extraction errors, accessibility, special-category leakage and whether recruiter practice could become automated decision-making. Remove photographs and irrelevant sensitive fields before scoring, validate job criteria, and prohibit proxy features that reproduce protected characteristics.
-
-Second, redesign and evidence human oversight. Do not allow automatic rejection. Require the recruiter to see the source CV, score factors and limitations; give them enough time and authority to disagree; record the reasons for the final decision and any override; and monitor rubber-stamping rates. Update the applicant notice to explain profiling, the main factors used, recipients, retention, transfer location and rights. Provide a clear route to correct extracted data, object to profiling, request human review and contest an outcome.
-
-Third, close the processor and transfer chain before data flows. Execute Article 28 terms with employer customers and sub-processors. Contractually ban the US vendor from retaining inputs or outputs for training or product improvement. Verify whether the exact US recipient is covered by the EU–US Data Privacy Framework; if not, use the correct SCC module, perform a transfer impact assessment and implement supplementary safeguards. Enforce the deletion schedule across production, logs, vendor systems and backups.
-
-Residual risks remain. Historical hiring patterns and apparently neutral criteria may still produce discriminatory outcomes, even after testing. Recruiters may over-trust a score despite training, turning formal oversight into rubber-stamping. Transfer law or vendor practices may change, while free-text CVs can still reveal unexpected sensitive information. These risks require ongoing bias and performance monitoring, periodic transfer and vendor review, applicant complaint analysis, and suspension thresholds when harm or material drift appears.
-
-Authority references
-
-General Data Protection Regulation — consolidated text
-
-EDPB/WP29 Guidelines on DPIAs and high-risk processing
-
-EDPB/WP29 Guidelines on automated decision-making and profiling
-
-EDPB guidance on data-subject rights and fully automated decisions
-
-EU AI Act — consolidated text
-
-European Commission: EU–US data transfers
-
-European Commission: Standard Contractual Clauses
+- [General Data Protection Regulation, Regulation (EU) 2016/679](https://eur-lex.europa.eu/eli/reg/2016/679/oj)
+- [EDPB guidance: processing personal data lawfully](https://www.edpb.europa.eu/sme/be-compliant/process-personal-data-lawfully_en)
+- [EDPB guidance: respecting individuals' rights](https://www.edpb.europa.eu/sme/be-compliant/respect-individuals-rights_en)
+- [EDPB Guidelines 1/2024 on legitimate interests](https://www.edpb.europa.eu/public-consultations/guidelines-12024-on-processing-of-personal-data-based-on-article-61f-gdpr_en)
