@@ -1,0 +1,187 @@
+GDPR Audit Pack — Elza Paegle
+
+Audit worksheet
+
+Transition note from the EU AI Act lab
+
+This audit carries forward Case B: AI-assisted CV screening with human review. In the earlier AI Act exercise, the system was classified as high-risk because it ranks applicants and materially influences who progresses to interview, even though a recruiter can confirm or override the shortlist. It is the strongest case for a GDPR audit because it combines profiling, potentially significant employment effects, possible special-category data in free-text CVs, a power imbalance, and a non-EU processor chain. The AI Act and GDPR analyses therefore run in parallel: high-risk product controls do not replace the need for a lawful basis, data minimisation, applicant rights, and valid transfer safeguards.
+
+Fixed fact pattern
+
+TalentBridge GmbH is a fictional Berlin HR-technology company with about 80 employees that provides CV-screening software to medium-sized EU employers. Its employer customers upload approximately 100,000 EU/EEA applications per year, including names, contact details, CVs, education, employment history, skills, languages, cover letters, recruiter notes, and vacancy data. The system extracts job-related information, compares it with pre-set vacancy criteria, assigns a score, and ranks applicants for recruiter review. A recruiter is meant to review the CV, score, and explanation before inviting or rejecting anyone and can override the ranking; the system must not auto-reject. TalentBridge uses an EU cloud host and a US-based model API sub-processor whose EU–US Data Privacy Framework certification has not yet been verified. The intended baseline does not permit applicant data to be used for vendor or product model training, but this must still be confirmed contractually and technically. TalentBridge acts mainly as processor for each employer controller; any independent use for security logs or product improvement requires a separate role and purpose analysis.
+
+CFU checkpoint 1 — Recognize
+
+Personal data present: identity and contact details; education and employment history; skills, languages, location, work eligibility, cover-letter content, recruiter notes; application metadata; AI-generated scores, rankings, explanations, and inferred suitability.
+
+Special-category risk: CVs or attachments may reveal health/disability, trade-union membership, political or religious affiliation, racial or ethnic origin, or other Article 9 information. These data are not necessary for general ranking and must be excluded or segregated.
+
+EU-border crossing: yes. Applicant data may be sent from the EU/EEA processor to a US model API sub-processor.
+
+Section A — Data map
+
+Purpose
+
+Data and source
+
+Lawful basis and one-line justification
+
+Retention
+
+Recipients / processors
+
+International transfer
+
+Receive and manage an application
+
+Applicant-provided identity, contact details, CV, cover letter, education, work history, skills and vacancy selected
+
+Article 6(1)(b), pre-contract steps, for the employer controller: processing the application is necessary to consider the applicant's request to enter an employment contract. Confirm any Member State employment-law rules under Article 88.
+
+Active recruitment period plus six months after the final decision, subject to documented local limitation periods; backups deleted within 30 further days
+
+Employer HR/recruiters; TalentBridge as processor; EU cloud host as sub-processor
+
+None if storage/support remains in the EEA
+
+Extract, score and rank applicants against documented vacancy criteria
+
+Application data plus vacancy criteria; generated features, score, ranking and explanation
+
+Proposed Article 6(1)(f), conditioned on an LIA and legal review. The employer may have a legitimate interest in consistent, efficient screening, but must prove purpose, necessity and a fair balance. AI ranking is not automatically “necessary” under Article 6(1)(b). TBD — national employment-law review.
+
+Same as the application record; ranking artefacts deleted when the application file is deleted
+
+Authorised employer recruiters; TalentBridge; EU cloud host; US model API sub-processor
+
+Article 45 adequacy only if the exact US recipient is DPF-certified for the relevant data. Otherwise Article 46 SCCs, Module 3, plus a transfer impact assessment and supplementary measures
+
+Provide a voluntary future-opportunity talent pool
+
+Contact details, CV, job preferences
+
+Article 6(1)(a), consent: separate, optional, specific consent with no disadvantage for refusal and easy withdrawal
+
+12 months, then delete or request fresh opt-in
+
+Employer talent team; TalentBridge; approved sub-processors
+
+Same transfer rule as above if US processing occurs; preferably keep this data in the EEA
+
+Maintain service security and audit logs
+
+User/account identifiers, timestamps, access records, system events; avoid CV text in logs
+
+Article 6(1)(f), legitimate interests: limited security logging is necessary to protect the service and applicant data, subject to minimisation and access controls
+
+90 days, unless a documented security investigation requires a limited extension
+
+TalentBridge security staff; EU logging/hosting provider
+
+EEA only in the proposed design
+
+Train or improve models using applicant data
+
+CVs, outcomes, scores, recruiter decisions
+
+Not authorised in the baseline. Any future reuse requires a separate compatibility, role, lawful-basis, Article 9, transparency and DPIA assessment before processing
+
+None; provider inputs/outputs must not be retained for training
+
+No recipient authorised
+
+No transfer authorised for this purpose
+
+Data-flow summary
+
+The applicant submits materials to the employer's recruitment portal.
+
+The employer controller sends the application to TalentBridge under documented instructions.
+
+TalentBridge stores the record with an EU host and sends only minimised text needed for scoring to the approved model sub-processor.
+
+TalentBridge returns a score, ranked shortlist and explanation to an authorised recruiter.
+
+The recruiter examines the underlying application and documents an independent decision before any rejection or interview decision.
+
+The application, ranking artefacts, API records and backups are deleted according to the retention schedule.
+
+Section B — Risk and rights
+
+1. Are Article 9 special-category data present or inferable?
+
+They may be included incidentally or inferred from names, photographs, affiliations, career gaps, accommodation requests or free text. General suitability ranking must not use or infer these attributes. Unnecessary fields should be redacted before scoring; accommodation or legally required employment data should be handled in a separate restricted workflow with a valid Article 9(2) condition and Member State safeguards.
+
+2. Is Article 22 automated decision-making present?
+
+The design is intended not to be solely automated because a recruiter reviews the underlying CV, the score and the explanation before acting. Article 22 risk remains high: if recruiters routinely rubber-stamp the ranking or never have authority, time or information to change it, the decision may be treated as effectively automated and similarly significant. The system therefore needs a no-auto-rejection rule, trained reviewers, real override authority, review logs, clear reasons, and an applicant route to obtain human intervention and contest an outcome.
+
+3. Is a DPIA required?
+
+Yes, before launch. The processing meets multiple EDPB criteria: evaluation/scoring; automated decision-making with potentially significant effects; large-scale processing; use of innovative technology; data concerning applicants in a power-imbalanced or vulnerable position; possible sensitive data; and potential exclusion from an employment opportunity. Meeting several criteria, together with GDPR Article 35's high-risk threshold, makes a DPIA necessary. The employer controller owns the DPIA, with TalentBridge's Article 28 assistance; TalentBridge should also maintain a reusable product-level assessment.
+
+4. Likely data-subject friction points
+
+Access: applicants will request their stored data, score, ranking, relevant logic/factors, recipients and retention information.
+
+Rectification: an inaccurate extracted skill or employment date may directly depress a score and must be correctable before the decision.
+
+Objection: where ranking relies on Article 6(1)(f), applicants can object to profiling; the employer must assess the objection and offer a practical non-AI review path where appropriate.
+
+Erasure/restriction: deletion requests may conflict with a short, documented need to retain evidence for legal claims; the response must distinguish active-use data from restricted legal-hold data.
+
+Human review/contest: applicants need a simple way to challenge a result and receive review by a person able to change it.
+
+5. Controller / processor split
+
+Employer customer — controller: decides to recruit, defines vacancy criteria, chooses the tool, determines the outcome, sets the lawful basis, provides notices, handles rights and owns the case-specific DPIA.
+
+TalentBridge — processor for screening: processes applicant data only on documented employer instructions and assists with security, rights, deletion, DPIA evidence and breach response.
+
+TalentBridge — possible independent controller: only for narrowly defined account/security data or any self-determined product-improvement purpose. Product improvement using applicant content is outside the baseline and would require a fresh assessment.
+
+EU cloud host and US model API — sub-processors: may act only under Article 28-compliant terms, approved instructions and an up-to-date sub-processor list.
+
+6. Are DPAs required?
+
+Yes. Each employer needs an Article 28 DPA with TalentBridge. TalentBridge needs sub-processing terms with the EU host and US model vendor, including confidentiality, security, deletion/return, audit evidence, incident support, rights/DPIA assistance, prior notice of sub-processor changes, and a ban on model training or secondary use. The US transfer also needs verified DPF coverage or the correct SCC module and transfer assessment.
+
+Section C — Law stacking
+
+AI Act: the CV-ranking system is high-risk under Annex III, point 4(a), because it is used to analyse/filter applications and evaluate candidates. The AI Act adds provider/deployer duties such as risk management, data governance, documentation and logs, deployer information, human oversight, accuracy, robustness, cybersecurity and monitoring; these do not replace GDPR lawful-basis and rights duties.
+
+ePrivacy: no cookies, tracking pixels or device-level tracking are required for the fixed scenario, so ePrivacy is N/A to the ranking flow. Any optional non-essential recruitment-site analytics would require a separate cookie/consent assessment and must not feed the ranking model.
+
+Data Act: N/A to the core audit because no connected-product or IoT data is processed. Any general contractual cloud-switching issue should be assessed separately and does not provide a lawful basis for applicant profiling.
+
+Client recommendation memo
+
+To: Executive, Legal and Product Teams, TalentBridge GmbH
+From: Elza Paegle, AI Governance Consultant
+Subject: Conditions for launching the EU applicant-ranking service
+
+Bottom line — go with conditions. TalentBridge may proceed only after the controller/processor model, lawful basis, human-review workflow and EU–US transfer safeguards are implemented and evidenced. The tool affects access to employment, profiles applicants at scale and may receive sensitive information; a recruiter override in the interface is not enough unless review is meaningful in practice.
+
+First, complete a DPIA and lawful-basis decision before live processing. Each employer must document why AI ranking is necessary and proportionate, complete the purpose–necessity–balancing test if relying on legitimate interests, and check national employment rules. The DPIA should test discrimination, extraction errors, accessibility, special-category leakage and whether recruiter practice could become automated decision-making. Remove photographs and irrelevant sensitive fields before scoring, validate job criteria, and prohibit proxy features that reproduce protected characteristics.
+
+Second, redesign and evidence human oversight. Do not allow automatic rejection. Require the recruiter to see the source CV, score factors and limitations; give them enough time and authority to disagree; record the reasons for the final decision and any override; and monitor rubber-stamping rates. Update the applicant notice to explain profiling, the main factors used, recipients, retention, transfer location and rights. Provide a clear route to correct extracted data, object to profiling, request human review and contest an outcome.
+
+Third, close the processor and transfer chain before data flows. Execute Article 28 terms with employer customers and sub-processors. Contractually ban the US vendor from retaining inputs or outputs for training or product improvement. Verify whether the exact US recipient is covered by the EU–US Data Privacy Framework; if not, use the correct SCC module, perform a transfer impact assessment and implement supplementary safeguards. Enforce the deletion schedule across production, logs, vendor systems and backups.
+
+Residual risks remain. Historical hiring patterns and apparently neutral criteria may still produce discriminatory outcomes, even after testing. Recruiters may over-trust a score despite training, turning formal oversight into rubber-stamping. Transfer law or vendor practices may change, while free-text CVs can still reveal unexpected sensitive information. These risks require ongoing bias and performance monitoring, periodic transfer and vendor review, applicant complaint analysis, and suspension thresholds when harm or material drift appears.
+
+Authority references
+
+General Data Protection Regulation — consolidated text
+
+EDPB/WP29 Guidelines on DPIAs and high-risk processing
+
+EDPB/WP29 Guidelines on automated decision-making and profiling
+
+EDPB guidance on data-subject rights and fully automated decisions
+
+EU AI Act — consolidated text
+
+European Commission: EU–US data transfers
+
+European Commission: Standard Contractual Clauses
