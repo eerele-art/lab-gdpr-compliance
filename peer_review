@@ -1,0 +1,72 @@
+# Intellectus peer review and debrief record
+
+**Student:** Elza Paegle  
+**Artifact exchanged:** Intellectus client recommendation memo from `gdpr_audit_pack_elza_paegle.md`  
+**Status:** Pending the required real partner swap
+
+> Do not fill this file with assumed feedback. The partner must read the Intellectus memo and provide their actual scores and comments. Replace every bracketed field after the swap.
+
+## 1. Exchange record
+
+- **Partner name:** [to complete]
+- **Partner repository or submission:** [to complete]
+- **Date memo sent:** [YYYY-MM-DD]
+- **Date feedback received:** [YYYY-MM-DD]
+- **Method used for exchange:** [to complete]
+- **Version reviewed / commit:** [to complete]
+
+## 2. Partner scoring rubric
+
+Score each criterion from **1 (missing or unclear)** to **5 (clear, accurate and actionable)** and add a concrete comment.
+
+| Criterion | Score (1–5) | Partner's actual comment |
+| --- | ---: | --- |
+| The memo accurately explains Intellectus and where personal data may enter the workflow. | [ ] | [to complete] |
+| The controller/processor/vendor role map is appropriately cautious. | [ ] | [to complete] |
+| Lawful basis, public-source data and Article 14 transparency are addressed. | [ ] | [to complete] |
+| Sensitive data, individual rights and human review are addressed. | [ ] | [to complete] |
+| n8n retention, security, vendors, transfers and DPIA screening are addressed. | [ ] | [to complete] |
+| Recommendations are practical, prioritised and readable for a client. | [ ] | [to complete] |
+| **Total** | **[ ] / 30** | |
+
+## 3. Partner's client response
+
+- **One strength of the Intellectus recommendation:** [partner response]
+- **One important privacy risk or omission:** [partner response]
+- **One fact about the architecture that needs clarification:** [partner response]
+- **One change the product team should make first:** [partner response]
+- **Would you accept “proceed with conditions”? Why or why not?** [partner response]
+
+## 4. Student response to feedback
+
+- **Feedback I accept:** [to complete]
+- **Feedback I question, and why:** [to complete]
+- **Change made to the memo or supporting artifact:** [to complete]
+- **Feedback not incorporated, with reason:** [to complete]
+- **Commit containing the change:** [to complete]
+
+## 5. Debrief record
+
+- **Debrief date:** [YYYY-MM-DD]
+- **Participants:** Elza Paegle and [partner name]
+- **Where our conclusions agreed:** [to complete]
+- **Where they differed:** [to complete]
+- **What missing Intellectus fact caused the most uncertainty:** [to complete]
+- **What the external reviewer noticed that the author did not:** [to complete]
+
+### Joint closing note
+
+[Write two or three sentences together after the debrief. State what the exchange revealed about auditing the privacy implications of public-source AI research and about reviewing one's own work versus receiving an external review.]
+
+## Completion check
+
+- [ ] Actual partner name and dates recorded
+- [ ] All six criteria scored by the partner
+- [ ] Partner comments copied accurately
+- [ ] Client-response questions answered by the partner
+- [ ] Student response and any resulting change recorded
+- [ ] Debrief completed
+- [ ] Joint closing note written together
+
+**Integrity note:** No peer feedback has been invented. This file is intentionally incomplete until the required human exchange occurs.
+
