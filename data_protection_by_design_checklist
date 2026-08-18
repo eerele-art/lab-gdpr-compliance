@@ -1,6 +1,7 @@
-Mini data protection by design checklist
+Intellectus data protection by design/default checklist
 
-Scope: Highest-risk activity — extracting, scoring and ranking EU/EEA job applicants.
+Reviewer: Elza Paegle
+Rule: Pass requires evidence. Unknown is a launch gap, not an acceptable assumption.
 
 Control
 
@@ -8,55 +9,106 @@ Status
 
 Current finding
 
-Required next step
+Required remediation
 
-Data minimisation
+Bounded purpose and research scope
 
-Fail
+Partial
 
-The proposed flow can send the full CV and free text, although photographs, addresses, affiliations and other fields may be irrelevant to suitability.
+Organisational diagnostic preparation is defined, but person-level necessity is not documented.
 
-Define a job-relevance schema, redact excluded fields before the API call, and prohibit sensitive/proxy features.
+Approve each use case; prefer organisation-level evidence; prohibit people-ranking and unrelated profiling.
 
-Purpose binding
-
-Unknown
-
-The intended baseline forbids training, but vendor retention settings and downstream contractual restrictions are not yet evidenced.
-
-Apply the no-training clause, disable retention/training technically, verify sub-processors and retain configuration evidence.
-
-Access controls
-
-Unknown
-
-Authorised recruiter and support roles are described, but least-privilege roles, MFA, access reviews and audit-log testing are not evidenced.
-
-Implement role-based access, MFA, quarterly access review and alerting for bulk or unusual access.
-
-Retention enforcement
+Data minimisation and sensitive-data exclusion
 
 Fail
 
-A schedule exists, but automated deletion across production, API records, logs and backups has not been demonstrated.
+Public sources may contain unnecessary Article 9 or Article 10 data.
 
-Implement deletion jobs, vendor deletion instructions, backup expiry and quarterly deletion testing.
+Limit sources/windows; minimise names and quotations; filter or quarantine sensitive and offence data.
 
-Subject-rights workflow
+Controller, processor and subprocessor map
+
+Fail
+
+Client, Intellectus operator, n8n and API roles are not fully confirmed.
+
+Document each entity, purpose, instruction, location and contract; obtain legal review where roles overlap.
+
+Lawful basis and Article 14 plan
+
+Fail
+
+No approved LIA or indirect-collection transparency plan is evidenced.
+
+Complete the Article 6(1)(f) three-part test and record notice delivery or a case-specific Article 14(5)(b) assessment.
+
+Source and inference integrity
+
+Partial
+
+Source/evidence links and epistemic labels are strong, but production QA is incomplete.
+
+Preserve labels; verify identity and sources; block unsupported findings from a Ready brief.
+
+Meaningful consultant review
+
+Partial
+
+The consultant controls questions, next steps, notes and Draft/Ready status.
+
+Require a review checklist, reviewer identity and recorded outcome; train reviewers on privacy and sensitive data.
+
+Rights-ready traceability
+
+Fail
+
+No process shows how to find and act on a person's data across runs and vendors.
+
+Link person/source/evidence/finding/run; test access, correction, objection, restriction and deletion.
+
+Retention and deletion
 
 Unknown
 
-Applicants need access, correction, objection, erasure/restriction and human-review routes, but no tested 30-day case workflow exists.
+Browser state resets, but n8n executions, logs, APIs and backups are undefined.
 
-Create one intake channel, ownership matrix, identity verification, processor search/export support and deadline alerts; run a tabletop test.
+Approve purpose-based periods; configure automatic deletion and run cancellation; obtain vendor evidence.
 
-Incident response
+No training or secondary use
 
 Unknown
 
-Article 28 breach support is required, but detection, escalation and evidence needed for the controller's 72-hour assessment are not documented.
+Provider settings and contracts are not evidenced.
 
-Adopt an incident playbook, agree rapid processor-to-controller notice, maintain contact details and test a CV-data breach scenario.
+Execute Article 28 terms; disable training; prohibit cross-client reuse and unauthorised human review.
 
-Overall result: Do not launch yet. The design can move to controlled pilot only after both failures are remediated, unknowns are evidenced, the DPIA is approved and a no-auto-rejection workflow is tested.
+Production security
 
+Fail
+
+Direct browser-to-webhook deployment cannot protect a secret; authentication is not implemented.
+
+Use an authenticated backend/gateway, strict CORS, rate/body limits, least privilege, encryption and redacted logs.
+
+Transfers and subprocessors
+
+Unknown
+
+Processing and support locations are not fully mapped.
+
+Approve subprocessors and document any adequacy decision, SCCs, transfer assessment and supplementary measures.
+
+DPIA and accountability
+
+Fail
+
+Architecture evidence exists, but no approved DPIA screening, ROPA or complete privacy file is supplied.
+
+Complete the threshold assessment, LIA, ROPA, notices, DPAs, security review, rights test and sign-offs.
+
+Launch gate
+
+Result: fail pending remediation. Production may proceed only when every Fail is closed and each Unknown is resolved with evidence. Minimum approval requires: confirmed roles and vendors; an approved LIA and Article 14 approach; purpose and sensitive-data controls; Article 28 and transfer terms; secured webhook architecture; retention/deletion settings; tested individual-rights workflows; formal consultant review; and an approved DPIA threshold decision. If likely high risk or high residual risk remains, complete the full DPIA and apply Article 36 where required.
+
+This is an educational first-pass review, not legal advice or certification.
